@@ -1,0 +1,1 @@
+pref("kbdmover.suggest", "");

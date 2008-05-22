@@ -1,0 +1,426 @@
+
+
+
+var kbdmover = {
+
+  names : new Array(),
+  uris : new Array(),
+  paths : new Array(),
+  folders : new Array(),
+  rescanned: false,
+  ignorecase: false,
+  last: "",
+
+  myDump: function (aMessage) {
+    var consoleService = Components.classes["@mozilla.org/consoleservice;1"]
+    .getService(Components.interfaces.nsIConsoleService);
+    consoleService.logStringMessage("kbdmover: " + aMessage);
+  },
+  
+  
+  clear: function() 
+  {
+    this.names = new Array();
+    this.uris = new Array();
+    this.paths = new Array();
+    this.folders = new Array();
+  },
+  
+  scanFolders: function()
+  {
+    
+    if (this.names.length != 0)  // Already have our structures?
+    return;
+
+    this.ignorelist = '';
+
+    try 
+    {
+      // Handle lack of settings.
+      this.ignorelist = pref.getCharPref("kbdmover.ignorelist");
+    }
+    catch (except)
+    {
+      this.myDump("Didn't find preference kbdmover.ignorelist, ignoring.");
+    }
+
+  
+    this.myDump("Scanning...");
+
+    var accountManager = Components.classes["@mozilla.org/messenger/account-manager;1"]
+    .getService(Components.interfaces.nsIMsgAccountManager);
+
+    var allServers = accountManager.allServers;
+    var seenServers = new Array();
+
+    for (var i=0;i<allServers.Count();i++)
+    {
+      var currentServer = allServers.GetElementAt(i)
+	.QueryInterface(Components.interfaces.nsIMsgIncomingServer);
+
+      // All this because indexOf isn't available in Tb 1.0
+      var didAlready = false;
+      for (var j=0; j<seenServers.length;j++)
+	if (seenServers[j] == currentServer.rootFolder.URI)
+	  didAlready = true;
+
+      if (!didAlready)
+      {
+	// Only do if not in ignorelist
+	seenServers.push(currentServer.rootFolder.URI);
+	this.mapFolder(currentServer.rootFolder, "");
+      }
+    }
+
+  },
+
+ mapFolder: function(folder, path)
+  {
+
+    if (-1 != this.ignorelist.indexOf(folder.URI))
+    return;
+    
+
+     this.myDump("Checking " + folder.name+ " uri: "+folder.URI);
+    this.names.push( folder.name );
+    this.uris.push( folder.URI ); 
+    this.paths.push( path );
+    this.folders.push( folder );
+  
+    if( folder.hasSubFolders )
+    { 
+      var en = folder.GetSubFolders();
+      
+      try
+	{
+	  while ( ! en.isDone() )
+	    { 
+	      var next = en.currentItem();
+	      if (next)
+		{
+		  var nf = next.QueryInterface(Components.interfaces.nsIMsgFolder);
+		  
+		  this.mapFolder(nf, path+"/"+folder.name);	
+		}
+	      en.next();
+	    }
+	  
+	} 
+      catch (except) 
+	{	
+	}
+    }
+  
+  },
+
+
+ longestCommonString: function(v)
+  {
+    var s = "";
+
+    if (0 == v.length)
+    return "";
+
+    var longestCommon = Infinity;
+    for (var i=0; i<v.length; i++)
+    {
+      for (var j=0; j<v.length; j++)
+	{
+	  var loopTo = Math.min( Math.min(longestCommon, 
+					  v[i].length),
+				 v[j].length );
+
+	  longestCommon = loopTo;
+
+	  for (var k=0; k<=loopTo; k++)
+	    {
+	      if( v[i].length > k &&
+		  v[j].length > k)
+		{
+		  var x = v[i][k];
+		  var y = v[j][k];
+
+		  if (this.ignorecase)
+		    {
+		      x = x.toLowerCase();
+		      y = y.toLowerCase();
+		    }
+		  
+		  if (x != y)
+		    {
+		      longestCommon = k;
+		      break;
+		    }
+		}
+	      else
+		{
+		  longestCommon = k;
+		  break;
+		}
+	    }
+	  
+	}
+    }
+
+    return v[0].substring(0, longestCommon);
+   
+  },
+
+
+
+  matchingFolders: function(s)
+  {
+    var slashInd = s.lastIndexOf("/");
+
+    if (-1 == slashInd)
+    {
+      return this.matchingFoldersSingle(s);
+    }
+    else
+    {
+      // this.myDump( "matchingFolders " + s);
+
+      var lastPartStr = s.substring(slashInd+1); 
+      var firstPartStr = s.substring(0,slashInd);
+
+      var lastPart = this.matchingFoldersSingle(lastPartStr);
+      var firstPart = this.matchingFolders(firstPartStr);
+
+      var ret = new Object();
+      ret.unique = 0;
+      ret.complete = 0;
+      ret.names = new Array();
+      ret.uris = new Array();
+      ret.folders = new Array();
+      ret.paths = new Array();
+
+      for (var i=0; i<firstPart.paths.length; i++)
+      {
+	for (var j=0; j<lastPart.paths.length; j++)
+	  {
+	    // Path in first path part of that of last part?
+	    if ( lastPart.paths[j] == firstPart.paths[i]+"/"+firstPart.names[i])
+	      {		       
+
+		ret.names.push( lastPart.names[j] );
+		ret.uris.push( lastPart.uris[j] );
+		ret.folders.push( lastPart.folders[j] );
+		ret.paths.push( lastPart.paths[j] );
+
+		// Disable this
+		lastPart.paths[j] = "";
+
+	      }
+	  }
+      }
+      
+      // Need to recalculate completedName
+      
+      ret.completedName = "";
+
+      // First create a vector of vectors with 
+      var tmpv = new Array();
+      var common;
+      var n = 0;
+      for (i=0; i<s.length; i++)
+      if (s.charAt(i) == '/')
+      n++;
+      
+      for (i=0; i<ret.paths.length; i++)
+      {
+	var v = ret.paths[i].split("/");
+	v.push(ret.names[i]);
+	v.reverse();
+	v = v.slice(0, n+1);
+	v.reverse();
+
+	tmpv.push(v);
+      }
+
+      for (i=0; i<=n; i++)
+      {
+	var tmpq = new Array();
+	for (j=0; j<tmpv.length; j++)
+	  if (tmpv[j][i])
+	    tmpq.push(tmpv[j][i]);
+	common = this.longestCommonString(tmpq); 
+	ret.completedName = ret.completedName + "/" + common;
+
+	if (i == n) // Last part of name?
+	  for (j=0; j<ret.names.length; j++)
+	    if (ret.names[j] == common)
+ 	      ret.complete = 1;
+      }
+      
+      ret.completedName = ret.completedName.substring(1);
+
+
+      if (ret.paths.length == 1)
+      {
+	ret.unique = 1;
+	ret.complete = 1;
+      }
+
+      return ret;
+    }
+  },
+
+
+  matchingFoldersSingle: function(s)
+  {
+    var ret = new Object();
+    var matchingNames = this.matchingFolderNames(s);
+  
+    // this.myDump( "matchingFoldersSingle " + s);
+
+    if (matchingNames.length == 1)
+    {
+      // Simplest case, one unique match.
+
+      ret.unique = 1;
+      ret.complete = 1;
+      ret.commonPrefixLength = this.names[matchingNames[0]].length;
+
+      ret.names = [this.names[matchingNames[0]]];
+      ret.uris = [this.uris[matchingNames[0]]];
+      ret.folders = [this.folders[matchingNames[0]]];
+      ret.paths = [this.paths[matchingNames[0]]];
+      ret.completedName = this.names[matchingNames[0]];
+     
+      return ret;
+    }
+
+    ret.unique = 0;
+    ret.complete = 0;
+    ret.names = new Array();
+    ret.uris = new Array();
+    ret.folders = new Array();
+    ret.paths = new Array();
+
+
+    var tmpv = new Array();
+
+    for (var i=0; i<matchingNames.length; i++)
+    {
+      tmpv.push(this.names[matchingNames[i]]);
+    }
+
+
+
+    ret.completedName = this.longestCommonString(tmpv);
+    ret.commonPrefixLength = ret.completedName.length;
+
+    while (matchingNames.length)
+    {
+      i = matchingNames.shift();
+
+      // this.myDump( "Does "+this.names[i]+" match "+ret.completedName+"?" );
+
+      // We've found a complete match?
+      if (this.names[i] == ret.completedName) 
+	ret.complete = 1;
+
+      ret.names.push( this.names[i] );
+      ret.uris.push( this.uris[i] );
+      ret.folders.push( this.folders[i] );
+      ret.paths.push( this.paths[i] );     
+    }
+
+
+    return ret;
+  },
+
+
+  matchingFolderNames: function(s)
+  {
+    var matchingNames = new Array();
+
+    if (this.ignorecase)
+      s = s.toLowerCase();
+
+    for (var i=0; i<this.names.length; i++)
+    {
+      var current = this.names[i].substring(0,s.length);
+
+      if ((current == s) || 
+	  (this.ignorecase && current.toLowerCase() == s))  // Name matches
+        matchingNames.push(i);
+    }
+
+    return matchingNames;
+  }
+
+
+}
+
+
+kbdmover.scanFolders();
+
+const kbdretWrapper = {
+
+  uri : "",
+  getAttribute:function(name) {
+
+    return this.uri;
+  }
+}
+
+function kbdmoverMoveCallback(ret)
+{
+
+  var a = new Object(kbdretWrapper);
+  a.uri = ret.uri;
+  kbdmover.myDump( "Moving to "+ret.uri );
+  
+  MsgMoveMessage( a );
+}
+
+function kbdmoverCopyCallback(ret)
+{
+
+  var a = new Object(kbdretWrapper);
+  a.uri = ret.uri;
+  kbdmover.myDump( "Copying to "+ret.uri );
+  
+  MsgCopyMessage( a );
+}
+
+function kbdmoverGotoCallback(ret)
+{
+
+  kbdmover.myDump( "Going to "+ret.uri );
+  SelectFolder(ret.uri);  
+}
+
+function kbdmoverMoveMail()
+{
+  var ret = new Object();
+
+  var w =  window.openDialog("chrome://kbdmover/content/kbdmoverDialog.xul",
+			 "kbdmover",
+			 "chrome", 
+			 kbdmover, ret, kbdmoverMoveCallback, gDBView,'move');
+
+}
+
+function kbdmoverCopyMail()
+{
+  var ret = new Object();
+
+  var w =  window.openDialog("chrome://kbdmover/content/kbdmoverDialog.xul",
+			 "kbdmover",
+			 "chrome", 
+			 kbdmover, ret, kbdmoverCopyCallback, gDBView,'copy');
+
+}
+
+function kbdmoverGoto()
+{
+  var ret = new Object();
+
+  var w =  window.openDialog("chrome://kbdmover/content/kbdmoverDialog.xul",
+			 "kbdmover",
+			 "chrome", 
+			 kbdmover, ret, kbdmoverGotoCallback, gDBView,'goto');
+
+}

@@ -1,0 +1,14 @@
+<!ENTITY kbdmoverMoveCmd.label "Move message to...">
+<!ENTITY kbdmoverMoveMenu.label "Move message to...">
+<!ENTITY kbdmoverMoveCmd.accesskey "M">
+<!ENTITY kbdmoverMoveCmd.key "X">
+
+<!ENTITY kbdmoverCopyCmd.label "Copy message to...">
+<!ENTITY kbdmoverCopyMenu.label "Copy message to...">
+<!ENTITY kbdmoverCopyCmd.accesskey "C">
+<!ENTITY kbdmoverCopyCmd.key "C">
+
+<!ENTITY kbdmoverGotoCmd.label "Goto folder">
+<!ENTITY kbdmoverGotoMenu.label "Goto folder">
+<!ENTITY kbdmoverGotoCmd.accesskey "G">
+<!ENTITY kbdmoverGotoCmd.key "J">

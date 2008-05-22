@@ -1,0 +1,7 @@
+<!ENTITY kbdmoverDialogHeader "Flytta meddelande till...">
+<!ENTITY kbdmoverDialogTitle "Flytta meddelande till...">
+<!ENTITY moveTo "Flytta meddelandet till: ">
+<!ENTITY kbdmoverGiveDest "Ange vilken mapp du vill flytta meddelandet till:">
+<!ENTITY kbdmoverDialogHelp "Du kan ange en brevlåda eller en 'sökväg' som J/F/B för Jobb/Företag/Brevlåda, om den kombinationen unikt specifierar en brevlåda.">
+<!ENTITY ignoreCaseChk "Versalokänslig jämförelse">
+<!ENTITY refreshFolderList "Uppdatera mapplista">

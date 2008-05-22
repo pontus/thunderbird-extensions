@@ -1,0 +1,63 @@
+<?xml version="1.0"?> 
+
+
+<!DOCTYPE overlay [
+  <!ENTITY % messengerDTD SYSTEM "chrome://messenger/locale/messenger.dtd" >
+%messengerDTD;
+  <!ENTITY % contentAreaCommandsDTD SYSTEM "chrome://communicator/locale/contentAreaCommands.dtd" >
+%contentAreaCommandsDTD;
+  <!ENTITY % brandDTD SYSTEM "chrome://global/locale/brand.dtd" >
+%brandDTD;
+  <!ENTITY % kbdmoverDTD SYSTEM "chrome://kbdmover/locale/kbdmover.dtd" >
+%kbdmoverDTD;
+]>
+
+
+<overlay xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
+
+   <script type="application/x-javascript" src="chrome://kbdmover/content/kbdmover.js"/>
+   <script type="application/x-javascript" src="chrome://kbdmover/content/kbdmoverMainWindowHandling.js"/>
+
+  <keyset id="mailKeys">
+        <key id="key_kbdmover_move"
+           key="&kbdmoverMoveCmd.key;"
+           oncommand="kbdmoverMoveMail();"
+           modifiers="accel" />
+
+   <key id="key_kbdmover_copy"
+           key="&kbdmoverCopyCmd.key;"
+           oncommand="kbdmoverCopyMail();"
+           modifiers="accel" />
+
+   <key id="key_kbdmover_goto"
+           key="&kbdmoverGotoCmd.key;"
+           oncommand="kbdmoverGoto();"
+           modifiers="accel" />
+
+
+   </keyset>
+
+
+   <!-- How do we put this in the Headers menu? Can't seem to add to that anonymous popup -->
+
+  <menu id="threadPaneContext-moveMenu">
+   <menupopup id="kbdmoverMoveMenuPopup">
+      <menuitem id="kbdmoverMoveMenuItem" 
+                label="&kbdmoverMoveMenu.label;" 
+                accesskey="&kbdmoverMoveCmd.accesskey;"
+                oncommand="kbdmoverMoveMail();"
+	        />
+   </menupopup>
+  </menu>
+
+  <menu id="threadPaneContext-copyMenu">
+   <menupopup id="kbdmoverCopyMenuPopup">
+      <menuitem id="kbdmoverCopyMenuItem" 
+                label="&kbdmoverCopyMenu.label;" 
+                accesskey="&kbdmoverCopyCmd.accesskey;"
+                oncommand="kbdmoverCopyMail();"
+	        />
+   </menupopup>
+  </menu>
+
+</overlay>

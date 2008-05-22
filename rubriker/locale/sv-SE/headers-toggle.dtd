@@ -1,0 +1,4 @@
+<!ENTITY toggleheadersCmd.label "Växla rubrikvisning">
+<!ENTITY toggleheadersMenu.label "Växla rubrikvisning">
+<!ENTITY toggleheadersCmd.accesskey "A">
+<!ENTITY toggleheadersCmd.key "H">

@@ -1,0 +1,24 @@
+<?xml version="1.0"?> 
+
+
+<?xml-stylesheet href="chrome://communicator/skin/" type="text/css"?>
+
+<!DOCTYPE dialog SYSTEM "chrome://messenger-headers-toggle/locale/about-headers-toggle.dtd">
+
+<dialog xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
+        onload="init();"
+        buttons="accept"
+        persist="screenX screenY"
+        title="&pane.title;">
+
+
+<groupbox>
+  <caption label="&rHeader;"/>
+
+  <separator class="thin"/>
+  &abouttext;
+
+</groupbox>
+
+
+</dialog>

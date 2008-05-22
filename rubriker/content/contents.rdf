@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+
+<RDF:RDF xmlns:RDF="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+         xmlns:chrome="http://www.mozilla.org/rdf/chrome#">
+
+  <!-- list all the packages being supplied by this jar -->
+  <RDF:Seq about="urn:mozilla:package:root">
+    <RDF:li resource="urn:mozilla:package:messenger-headers-toggle"/>
+  </RDF:Seq>
+
+  <!-- package information -->
+  <RDF:Description about="urn:mozilla:package:messenger-headers-toggle"
+        chrome:displayName="Headers-Toggle Support"
+        chrome:author="Pontus Freyhult"
+        chrome:authorURL="http://www.mozilla.org/projects/thunderbird/specs/headers-toggle.html"
+        chrome:name="messenger-headers-toggle"
+        chrome:description="This extension adds keyboard header toggling functionality to Mozilla Thunderbird." 
+        chrome:extension="true"
+        chrome:settingsURL="chrome://messenger-headers-toggle/content/pref-headers-toggle.xul"
+        chrome:optionsURL="chrome://messenger-headers-toggle/content/pref-headers-toggle.xul"	
+        chrome:localeVersion="0.1">
+  </RDF:Description>
+
+  <!-- overlay information -->
+  <RDF:Seq about="urn:mozilla:overlays">
+    <RDF:li resource="chrome://messenger/content/mailWindowOverlay.xul"/>
+  </RDF:Seq>
+
+  <RDF:Seq about="chrome://messenger/content/mailWindowOverlay.xul">
+    <RDF:li>chrome://messenger-headers-toggle/content/msgHeaders-toggleOverlay.xul</RDF:li>
+  </RDF:Seq>
+
+</RDF:RDF>

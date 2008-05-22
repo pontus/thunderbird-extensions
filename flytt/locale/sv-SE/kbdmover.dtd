@@ -1,0 +1,14 @@
+<!ENTITY kbdmoverMoveCmd.label "Flytta meddelande till...">
+<!ENTITY kbdmoverMoveMenu.label "Flytta meddelande till...">
+<!ENTITY kbdmoverMoveCmd.accesskey "F">
+<!ENTITY kbdmoverMoveCmd.key "X">
+
+<!ENTITY kbdmoverCopyCmd.label "Kopiera meddelande till...">
+<!ENTITY kbdmoverCopyMenu.label "Kopiera meddelande till...">
+<!ENTITY kbdmoverCopyCmd.accesskey "K">
+<!ENTITY kbdmoverCopyCmd.key "C">
+
+<!ENTITY kbdmoverGotoCmd.label "Gå till mapp">
+<!ENTITY kbdmoverGotoMenu.label "Gå till mapp">
+<!ENTITY kbdmoverGotoCmd.accesskey "G">
+<!ENTITY kbdmoverGotoCmd.key "J">

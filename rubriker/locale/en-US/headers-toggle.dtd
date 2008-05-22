@@ -1,0 +1,4 @@
+<!ENTITY toggleheadersCmd.label "Toggle full/normal header display">
+<!ENTITY toggleheadersMenu.label "Toggle display of all/normal headers">
+<!ENTITY toggleheadersCmd.accesskey "T">
+<!ENTITY toggleheadersCmd.key "H">

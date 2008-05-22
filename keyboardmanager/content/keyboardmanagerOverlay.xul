@@ -1,0 +1,20 @@
+<?xml version="1.0"?> 
+
+
+<!DOCTYPE overlay [
+  <!ENTITY % messengerDTD SYSTEM "chrome://messenger/locale/messenger.dtd" >
+%messengerDTD;
+  <!ENTITY % contentAreaCommandsDTD SYSTEM "chrome://communicator/locale/contentAreaCommands.dtd" >
+%contentAreaCommandsDTD;
+  <!ENTITY % brandDTD SYSTEM "chrome://global/locale/brand.dtd" >
+%brandDTD;
+  <!ENTITY % keyboardmanagerDTD SYSTEM "chrome://keyboardmanager/locale/keyboardmanager.dtd" >
+%keyboardmanagerDTD;
+]>
+
+
+<overlay xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
+
+   <script type="application/x-javascript" src="chrome://keyboardmanager/content/keyboardmanager.js"/>
+</overlay>
+

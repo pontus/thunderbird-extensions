@@ -1,0 +1,7 @@
+MoveMessagesTo=Move %1$S messages to: 
+MoveMessageTo=Move message to: 
+MovingTo=Moving to: %1$S
+AmbigComp=Ambiguous completion, please give more of the name or other parts.
+AmbigName=%1$S is complete but ambiguous, please specify more parts.
+AmbigNameNext=%1$S is complete but also part of a longer name, just accept to select suggested.
+

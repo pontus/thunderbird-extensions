@@ -1,0 +1,4 @@
+<!ENTITY kbdmoverCmd.label "Move message to...">
+<!ENTITY kbdmoverMenu.label "Move message to...">
+<!ENTITY kbdmoverCmd.accesskey "M">
+<!ENTITY kbdmoverCmd.key "X">

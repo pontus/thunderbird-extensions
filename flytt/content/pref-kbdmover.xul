@@ -1,0 +1,45 @@
+<?xml version="1.0"?> 
+
+
+<?xml-stylesheet href="chrome://communicator/skin/" type="text/css"?>
+<?xml-stylesheet href="chrome://messenger/skin/prefPanels.css" type="text/css"?>
+
+<!DOCTYPE dialog SYSTEM "chrome://kbdmover/locale/pref-kbdmover-old.dtd">
+
+
+<dialog xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
+        onload="init();"
+        buttons="cancel"
+        title="&pane.title;"
+	id="pref-kbdmover">
+
+  <script type="application/x-javascript">
+
+  <![CDATA[
+    
+    function init()
+    {
+      var pref = Components.classes["@mozilla.org/preferences-service;1"].getService(Components.interfaces.nsIPrefBranch);
+
+      var lastApp = pref.getCharPref("extensions.lastAppVersion");
+	// FIXME: Do this proper
+	
+      if ("1.5" == lastApp )
+	{	
+	   window.openDialog("chrome://kbdmover/content/pref-kbdmover-new.xul");
+	   window.close();
+	}
+    }
+  ]]>
+  </script>
+
+<groupbox>
+  <caption label="&rHeader;"/>
+
+  <separator class="thin"/>
+
+  <description>
+  &noSupport;
+  </description>
+</groupbox>
+</dialog>

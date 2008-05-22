@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+
+<bindings id="kbdmoverBindings"
+          xmlns="http://www.mozilla.org/xbl"
+          xmlns:html="http://www.w3.org/1999/xhtml"
+          xmlns:xul="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
+          xmlns:xbl="http://www.mozilla.org/xbl">
+
+  <binding id="kbdmover-completer">
+
+<!--           extends="chrome://global/content/bindings/textbox.xml#textbox"> -->
+
+
+    <implementation implements="nsIAutoCompleteSearch">
+
+      <constructor><![CDATA[
+// code
+      ]]></constructor>
+
+      <destructor><![CDATA[
+//code
+      ]]></destructor>
+
+
+      <!-- number of milliseconds after a keystroke before a search begins -->
+      <property name="timeout"
+                onset="this.setAttribute('timeout', val); return val;"
+                onget="var t = parseInt(this.getAttribute('timeout')); return t ? t : 0;"/>
+

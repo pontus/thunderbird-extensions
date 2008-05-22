@@ -1,0 +1,5 @@
+<!ENTITY pane.title   "KeyboardManager">
+<!ENTITY rHeader  "About KeyboardManager">
+<!ENTITY abouttext "Written by Pontus Freyhult, preferences handling taken from the offline extension.">
+<!ENTITY Ok  "Ok">
+

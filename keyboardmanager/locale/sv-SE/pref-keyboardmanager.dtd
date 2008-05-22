@@ -1,0 +1,6 @@
+<!ENTITY pane.title   "KeyboardManager">
+<!ENTITY rHeader  "Inställningar för KeyboardManager">
+<!ENTITY helpIntro  "Inga inst\xc3\xa4llningar möjliga.">^M
+<!ENTITY radioYes  "Ja">
+<!ENTITY radioNo  "Nej">
+

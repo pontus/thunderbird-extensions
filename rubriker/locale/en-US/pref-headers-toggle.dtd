@@ -1,0 +1,7 @@
+
+<!ENTITY pane.title   "Headers toggle">
+<!ENTITY rHeader  "Settings for headers toggle">
+<!ENTITY textNoHeader  "Include 'No header' in toggle loop?">
+<!ENTITY radioYes  "Yes">
+<!ENTITY radioNo  "No">
+

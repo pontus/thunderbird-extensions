@@ -1,0 +1,8 @@
+<!ENTITY kbdmoverDialogHeader "Move message to...">
+<!ENTITY kbdmoverDialogTitle "Move message to...">
+<!ENTITY moveTo "Move message to: ">
+<!ENTITY kbdmoverGiveDest "Enter what folder you want to move the message to:">
+<!ENTITY kbdmoverDialogHelp "You can give a part of a unique mailbox name or a 'path' such as W/C/M to specify the mailbox Work/Company/Mail, if that path is unique.">
+<!ENTITY ignoreCaseChk "Ignore case">
+<!ENTITY refreshFolderList "Refresh folder listing">
+

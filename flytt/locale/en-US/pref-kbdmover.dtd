@@ -1,0 +1,52 @@
+<!ENTITY pane.title   "KbdMover">
+<!ENTITY rHeader  "Settings for KbdMover">
+<!ENTITY radioYes  "Yes">
+<!ENTITY radioNo  "No">
+<!ENTITY textSuggestHelp "A comma seperated list that is searched left to right 
+until a method is found that gives a possible completion.
+Possible methods are last, senderX, receiverX (where X is the name of a test, 
+see below), as well as a string within quotes (&quot;example&quot;) - this string 
+will be used without any completion tests. last and &quot;string&quot; are always 
+considered  successful, other methods if they are complete.
+senderX and receiverX are only tested if just one mail is being moved (so KbdMover 
+knows for which mail to look at the headers).
+For senderX, the senders card is looked up in the and a test 
+completion is done on the field X corresponds to. For 
+receiverX the same is done for all To and CC-recipients 
+(until there are no more or the test succeeds), so the suggested value may depend 
+on the order the recipients are listed in.
+<html:p/>X may be one of:
+<html:ul>
+<html:li>nick</html:li>
+<html:li>category</html:li>
+<html:li>company</html:li>
+<html:li>screenname</html:li>
+<html:li>custom1</html:li>
+<html:li>custom2</html:li>
+<html:li>custom3</html:li>
+<html:li>custom4</html:li>
+<html:li>department</html:li>
+<html:li>displayname</html:li>
+<html:li>familyname</html:li>
+<html:li>firstname</html:li>
+<html:li>homecity</html:li>
+<html:li>homecountry</html:li>
+<html:li>homestate</html:li>
+<html:li>jobtitle</html:li>
+<html:li>lastname</html:li>
+<html:li>notes</html:li>
+<html:li>phoneticfirstname</html:li>
+<html:li>phoneticlastname</html:li>
+<html:li>spousename</html:li>
+<html:li>workcity</html:li>
+<html:li>workcountry</html:li>
+<html:li>workstate</html:li>
+</html:ul>
+<html:p/>
+So, use senderworkcountry to try completion on the country field of the 
+work adress in the senders address book card.">
+<!ENTITY textSuggest "Order for folder suggestion">
+<!ENTITY addSuggest "Add suggestion">
+<!ENTITY deleteSuggest "Remove suggestion">
+
+

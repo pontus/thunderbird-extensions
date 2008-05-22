@@ -1,0 +1,36 @@
+<?xml version="1.0"?> 
+
+
+<!DOCTYPE overlay [
+  <!ENTITY % messengerDTD SYSTEM "chrome://messenger/locale/messenger.dtd" >
+%messengerDTD;
+  <!ENTITY % contentAreaCommandsDTD SYSTEM "chrome://communicator/locale/contentAreaCommands.dtd" >
+%contentAreaCommandsDTD;
+  <!ENTITY % brandDTD SYSTEM "chrome://global/locale/brand.dtd" >
+%brandDTD;
+  <!ENTITY % headerstoggleDTD SYSTEM "chrome://messenger-headers-toggle/locale/headers-toggle.dtd" >
+%headerstoggleDTD;
+]>
+
+
+<overlay xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
+
+   <script language="JavaScript" src="chrome://messenger-headers-toggle/content/msg-headers-toggle.js"/>
+
+   <keyset id="mailKeys">
+        <key id="key_toggleheaders" 
+ 	   key="&toggleheadersCmd.key;"
+           oncommand="MsgViewToggleHeaders();"  />
+   </keyset>
+
+   <!-- How do we put this in the Headers menu? Can't seem to add to that anonymous popup -->
+   <menupopup id="menu_View_Popup">
+      <menuitem id="toggleheadersMenuItem" 
+                label="&toggleheadersMenu.label;" 
+                accesskey="&toggleheadersCmd.accesskey;"
+                key="key_toggleheaders" 
+                oncommand="MsgViewToggleHeaders();"
+	        insertafter="viewheadersmenu" />
+   </menupopup>
+
+</overlay>

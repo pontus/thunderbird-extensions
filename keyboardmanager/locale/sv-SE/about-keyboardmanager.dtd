@@ -1,0 +1,5 @@
+<!ENTITY pane.title   "KeyboardManager">
+<!ENTITY rHeader  "Om KeyboardManager">
+<!ENTITY abouttext "Skriven av Pontus Freyhult, hanteringen av inställningar är tagen från offline-utökningen.">
+<!ENTITY Ok  "Ok">
+

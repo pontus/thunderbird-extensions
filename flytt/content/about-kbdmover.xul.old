@@ -1,0 +1,24 @@
+<?xml version="1.0"?> 
+
+
+<?xml-stylesheet href="chrome://communicator/skin/" type="text/css"?>
+
+<!DOCTYPE dialog SYSTEM "chrome://kbdmover/locale/about-kbdmover.dtd">
+
+<dialog xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
+        onload="init();"
+        buttons="accept"
+        persist="screenX screenY"
+        title="&pane.title;">
+
+
+<groupbox>
+  <caption label="&rHeader;"/>
+
+  <separator class="thin"/>
+  <label id="about" value="&abouttext;" />
+
+</groupbox>
+
+
+</dialog>

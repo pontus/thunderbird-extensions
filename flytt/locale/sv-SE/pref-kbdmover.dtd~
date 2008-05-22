@@ -1,0 +1,47 @@
+<!ENTITY pane.title   "KbdMover">
+<!ENTITY rHeader  "Inställningar för KbdMover">
+<!ENTITY textSuggest "Ordning att förslå mappar i.">
+<!ENTITY textSuggestHelp "En kommaseparerad lista som söks från höger till vänster tills man hittar en metod som ger en möjlig komplettering. 
+Möjliga metoder är last, senderX, receiverX (där X är ett testnamn, se nedan), samt en sträng 
+inom citattecken (&quot;exempel&quot;) - denna sträng används då som förslag rakt av). 
+last och  &quot;sträng&quot; anses alltid som lyckade, andra metoder anses som lyckade ifall 
+de är kompletta.
+<html:p/>
+senderX samt receiverX testas bara ifall det rör sig om ett enskilt brev som flyttas. Först slås relevant post
+upp i adressboken, varefter en provkomplettering görs på värdet i den aktuella posten. Anses resultatet komplett 
+förslås postens värde. För receiverX så görs testet i ordning för alla listade mottagare tills någon anses lyckad
+eller det inte finns fler mottagare kvar. Det föreslagna värdet beror alltså på ordningen mottagarna är listade i.
+<html:p/>Möjliga X är:
+<html:ul>
+<html:li>nick</html:li>
+<html:li>category</html:li>
+<html:li>company</html:li>
+<html:li>screenname</html:li>
+<html:li>custom1</html:li>
+<html:li>custom2</html:li>
+<html:li>custom3</html:li>
+<html:li>custom4</html:li>
+<html:li>department</html:li>
+<html:li>displayname</html:li>
+<html:li>familyname</html:li>
+<html:li>firstname</html:li>
+<html:li>homecity</html:li>
+<html:li>homecountry</html:li>
+<html:li>homestate</html:li>
+<html:li>jobtitle</html:li>
+<html:li>lastname</html:li>
+<html:li>notes</html:li>
+<html:li>phoneticfirstname</html:li>
+<html:li>phoneticlastname</html:li>
+<html:li>spousename</html:li>
+<html:li>workcity</html:li>
+<html:li>workcountry</html:li>
+<html:li>workstate</html:li>
+</html:ul>
+<html:p/>
+Exempelvis anges senderworkcountry för att försöka komplettera på landsnamnet 
+angivet i arbetsadressen i avsändarens adressbokspost.
+">
+<!ENTITY radioYes  "Ja">
+<!ENTITY radioNo  "Nej">
+

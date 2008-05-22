@@ -1,0 +1,67 @@
+<?xml version="1.0"?>
+
+
+<!DOCTYPE overlay [
+  <!ENTITY % kbdmoverDTD SYSTEM "chrome://kbdmover/locale/kbdmoverDialog.dtd" >
+%kbdmoverDTD;
+]>
+
+
+<?xml-stylesheet href="chrome://global/skin/global.css" type="text/css"?>
+
+
+
+<dialog id="kbdmoverDialog" title="&kbdmoverDialogTitle;"
+        xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
+        xmlns:html="http://www.w3.org/1999/xhtml"
+        buttons="accept,cancel"
+        persist="screenX screenY"
+        onload="init();"
+        ondialogaccept="return doOK();"
+        ondialogcancel="return doCancel();">
+
+<stringbundleset id="stringbundleset">
+  <stringbundle id="kbdmoverDialogbundle" 
+    src="chrome://kbdmover/locale/kbdmoverDialog.properties" />
+</stringbundleset>
+
+<script type="application/x-javascript" src="chrome://messenger/content/msgMail3PaneWindow.js"/>
+<script type="application/x-javascript" src="chrome://messenger/content/messageWindows.js"/>
+<script type="application/x-javascript" src="chrome://messenger/content/addressbook/abCommon.js"/>
+
+<script type="application/x-javascript" src="chrome://kbdmover/content/kbdmoverAuto.js"/>
+<script type="application/x-javascript" src="chrome://kbdmover/content/kbdmoverDialog.js"/>
+
+
+<groupbox>
+  <caption id="caption" label="&kbdmoverDialogHeader;"/>
+
+  <label id="ambig" value=""/>
+  <separator class="thin"/>
+
+  <description label="&kbdmoverGiveDest;" />
+
+<hbox>
+<label id="textboxLabel" value="&moveTo;" />
+<textbox id="kbdmoverDest" size="60" type="autocomplete" timeout="500" autoFill="true" tabFocus="true" />
+</hbox>
+
+<description>
+&kbdmoverDialogHelp;
+</description>
+
+<hbox>
+
+<checkbox id="ignorecase" label="&ignoreCaseChk;" />
+<space flex="1" />
+<button id="refreshfolders" label="&refreshFolderList;"
+            oncommand="refresh();"/>
+
+</hbox>
+
+
+</groupbox>
+
+
+</dialog>
+

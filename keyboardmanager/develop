@@ -1,0 +1,9 @@
+#!/bin/sh
+
+if [ -z "$1" ]; then
+  TB=/home/pont/progs/thunderbird/thunderbird
+else
+  TB="$1"
+fi
+
+while true; do make && cp chrome/keyboardmanager.jar /home/pont/.mozilla-thunderbird/inobnp66.default/extensions/\{4e7eba2a-ecea-41ba-877c-395761f2d16c\}/chrome/keyboardmanager.jar && cp chrome/keyboardmanager.jar  /home/pont/.thunderbird/c00psj4e.Pontus/extensions/\{4e7eba2a-ecea-41ba-877c-395761f2d16c\}/chrome/keyboardmanager.jar && (sleep 2; $TB) done

@@ -1,0 +1,317 @@
+
+function trim(s)
+{
+  // Stolen from CustomHeaders.js
+
+  if (!s) return "";
+  return s.replace(/(^\s+)|(\s+$)/g, '');
+}
+
+function extractEmail(s)
+{
+
+  var start = s.indexOf('<');
+  var end = s.indexOf('>');
+
+  if (-1 == start) // Just an e-mail address
+    return s.toLowerCase();
+
+  if (-1 == end && start != -1) // Faulty
+    return s.toLowerCase().substring(start+1,s.length)
+
+  return s.toLowerCase().substring(start+1,end);
+}
+
+function searchFolder(k, name)
+{
+  k.myDump("searchfolder "+name);
+
+  if (!name.length)
+    return "";
+
+  var ret;
+  var casestore = k.ignorecase;
+
+  k.ignorecase = false;
+  ret = k.matchingFolders( name );
+  k.ignorecase = casestore;
+
+  if (ret.complete)
+    return ret.completedName;
+
+  k.ignorecase = true;
+  ret = k.matchingFolders( name );
+  k.ignorecase = casestore;
+
+  if (ret.complete)
+    return ret.completedName;
+
+  // Found nothing
+  return "";
+}
+
+function init()
+{
+  var gDBView = window.arguments[3];
+  var kbdmover = window.arguments[0];
+
+  var bundle = document.getElementById("kbdmoverDialogbundle");
+  var movetxt =  bundle.getString( "MoveMessageTo" );
+
+  if (!kbdmover.rescanned)
+    {
+      // Things aren't properly initialised the first time.
+
+      kbdmover.clear();
+      kbdmover.myDump("Rescanning");
+      kbdmover.scanFolders();
+      kbdmover.rescanned = true;
+    }
+
+  if (gDBView && gDBView.numSelected != 1)
+    movetxt = bundle.getFormattedString( "MoveMessagesTo", [gDBView.numSelected] );
+
+  var e = document.getElementById("moveLabel");
+  e.value = movetxt;
+
+  // TODO: Setup completion.
+
+  var f = document.getElementById("kbdmoverDest");
+  var pref = Components.classes["@mozilla.org/preferences-service;1"].
+             getService(Components.interfaces.nsIPrefBranch);
+
+  // Fill in suggested value, branches may return, so this should be the last part of init.
+
+  var abook = Components.classes["@mozilla.org/addressbook;1"].
+                  getService(Components.interfaces.nsIAddressBook);
+
+  var database = abook.getAbDatabaseFromURI("moz-abmdbdirectory://abook.mab");
+
+  var dir = Components.classes[ "@mozilla.org/rdf/rdf-service;1"].
+                  getService(Components.interfaces.nsIRDFService).
+                  GetResource("moz-abmdbdirectory://abook.mab").
+                  QueryInterface(Components.interfaces.nsIAbDirectory);
+ 
+  var hdr;
+
+  var s = "";
+
+  try 
+    {
+      // Handle lack of settings.
+      s = pref.getCharPref("kbdmover.suggest");
+    }
+  catch (except)
+    {
+      kbdmover.myDump("Didn't find preference kbdmover.suggest, skipping suggestions.");
+    }
+
+
+  var abchecks = [ 'nick', 'nickName',
+		   'category', 'category',
+		   'company', 'company',
+		   'screenname', 'aimScreenName',
+		   'custom1', 'custom1',
+		   'custom2', 'custom2',
+		   'custom3', 'custom3',
+		   'custom4', 'custom4',
+		   'department', 'department',
+		   'displayname', 'displayName',
+		   'familyname', 'familyName',
+		   'firstname', 'firstName',
+		   'homecity', 'homeCity',
+		   'homecountry', 'homeCountry',
+		   'homestate', 'homeState',
+		   'jobtitle', 'jobTitle',
+		   'lastname', 'lastName',
+		   'notes', 'notes',
+		   'phoneticfirstname', 'phoneticFirstName',
+		   'phoneticlastname', 'phoneticLastName',
+		   'spousename', 'spouseName',
+		   'workcity', 'workCity',
+		   'workcountry', 'workCountry',
+		   'workstate', 'workState'
+  ];
+
+  if (s)
+    {
+      var a = s.split(',');
+      for (var i = 0; i != a.length; i++)
+	{
+	  var current = trim(a[i]);
+	  
+	  if (gDBView && gDBView.numSelected == 1)
+	    {
+	      // Just one message - we can do things based on header.
+	      
+	      hdr = gDBView.hdrForFirstSelectedMessage;
+	      
+	      // Check the sender first.
+	      
+	      var sc = database.getCardFromAttribute(dir, "PrimaryEmail", trim(hdr.author), true);
+	      
+	      if (!sc)
+		sc =  database.getCardFromAttribute(dir, "PrimaryEmail", trim(extractEmail(hdr.author)), true);
+	      
+	      if (!sc)
+		sc =  database.getCardFromAttribute(dir, "SecondEmail", trim(hdr.author), true);
+	  
+	      if (!sc)
+		sc =  database.getCardFromAttribute(dir, "SecondEmail", trim(extractEmail(hdr.author)), true);
+
+	      if (sc)
+		for (var j = 0; j < abchecks.length; j = j+2)
+		  {
+		    if ('sender'+abchecks[j] == current.toLowerCase())
+		      {
+			f.value = searchFolder(kbdmover,sc[abchecks[j+1]]);
+			if (f.value)
+			  return;	        
+		      }
+		  }
+	      
+	  
+	      var recpt = (hdr.recipients+hdr.ccList).split(',');
+	      
+	      for (var k = 0; k < recpt.length; k++)
+		{
+		  sc = database.getCardFromAttribute(dir, "PrimaryEmail", trim(recpt[k]), true);
+	      
+		  if (!sc)
+		    sc =  database.getCardFromAttribute(dir, "PrimaryEmail", trim(extractEmail(recpt[k])), true);
+		  
+		  if (!sc)
+		    sc =  database.getCardFromAttribute(dir, "SecondEmail", trim(recpt[k]), true);
+		  
+		  if (!sc)
+		    sc =  database.getCardFromAttribute(dir, "SecondEmail", trim(extractEmail(recpt[k])), true);
+		  
+
+		  if (sc)		      
+		    for (j = 0; j < abchecks.length; j = j+2)
+		      {
+			if ('receiver'+abchecks[j] == current.toLowerCase())
+			  {
+			    f.value = searchFolder(kbdmover,sc[abchecks[j+1]]);
+			    if (f.value)
+			      return;	        
+			  }
+		      }		  
+		}
+	    }
+	    
+	    // Check things we can do without the headers
+	    
+	    if (current &&   // String to suggest
+		current.charAt(0) == '"' &&
+		current.charAt(current.length-1) == '"')
+	    {
+	      f.value = current.substr(1, current.length-3);
+	      return;
+	    }
+	    
+	    switch (current.toLowerCase())
+	    {
+	      case "last":
+	      f.value = kbdmover.last;
+	      return;
+	    }	    
+	  }      
+    }
+}
+
+function doOK()
+{
+  var kbdmover = window.arguments[0];
+
+  var ambig = document.getElementById("ambig");
+  var bundle = document.getElementById("kbdmoverDialogbundle");
+
+  var e = document.getElementById("kbdmoverDest");
+  var s = kbdmover.matchingFolders( e.value );
+  var p;
+
+  if (!s.complete) 
+   {
+     e.value = s.completedName;
+     ambig.value = bundle.getString("AmbigComp");
+     return false;
+   }
+  else
+    {
+      if (s.unique)
+	{
+	  // One single possible completion
+
+	  kbdmover.last = s.completedName;
+
+ 	  p = new Object();
+	  p.uri = s.uris[0];
+	  p.folder = s.folders[0];
+	  p.gDBView = window.arguments[3];
+
+	  ambig.value = bundle.getFormattedString("MovingTo",[s.names[0]]);
+
+	  window.arguments[2](p);	  
+	}
+      else
+	{
+	  // Multiple possible completions
+
+	  var exactMatches = new Array();
+	  var nextExactMatches = new Array();
+	  var origValue = e.value;
+	  var origNamepart = origValue;
+	  var nextNamepart = s.completedName;
+
+	  if (origNamepart.lastIndexOf("/") != -1)
+	    origNamepart = origValue.substring(origValue.lastIndexOf("/")+1);
+
+	  if (nextNamepart.lastIndexOf("/") != -1)
+	    nextNamepart = s.completedName.substring(s.completedName.lastIndexOf("/")+1);
+
+	  for (var i=0; i < s.names.length; i++)
+	    {
+	      if (s.names[i] == origNamepart)
+		exactMatches.push([s.names[i],s.folders[i],i]);
+	      if (s.names[i] == nextNamepart)
+		nextExactMatches.push([s.names[i],s.folders[i],i]);
+	    }
+
+	  e.value = s.completedName;
+
+	  if (exactMatches.length == 1)
+	    {
+	      i = exactMatches[0][2];
+	      // Only one exact match
+	      kbdmover.last = s.completedName;
+
+	      p = new Object();
+	      p.uri = s.uris[i];
+	      p.folder = s.folders[i];
+	      p.gDBView = window.arguments[3];
+	      ambig.value = bundle.getFormattedString("MovingTo",[s.names[i]]);
+
+	      window.arguments[2](p);
+	    }
+	  else
+	    {
+	      if(nextExactMatches.length != 1)
+		ambig.value = bundle.getFormattedString("AmbigName", [s.completedName]);
+	      else
+		ambig.value = bundle.getFormattedString("AmbigNameNext", [s.completedName]);
+
+	      return false;
+	    }
+    
+	}
+    }
+  return true;
+}
+
+function doCancel()
+{
+
+  return true;
+}
+

@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+
+<RDF:RDF xmlns:RDF="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+         xmlns:chrome="http://www.mozilla.org/rdf/chrome#">
+
+  <!-- list all the packages being supplied by this jar -->
+  <RDF:Seq about="urn:mozilla:package:root">
+    <RDF:li resource="urn:mozilla:package:keyboardmanager"/>
+  </RDF:Seq>
+
+  <!-- package information -->
+  <RDF:Description about="urn:mozilla:package:keyboardmanager"
+        chrome:displayName="Keyboard Moving Support"
+        chrome:author="Pontus Freyhult"
+        chrome:authorURL="http://soua.net/extensions/"
+        chrome:name="keyboardmanager"
+        chrome:description="Adds keyboard management functionality." 
+        chrome:extension="true"
+        chrome:settingsURL="chrome://keyboardmanager/content/pref-keyboardmanager.xul"
+        chrome:optionsURL="chrome://keyboardmanager/content/pref-keyboardmanager.xul"	
+        chrome:localeVersion="0.1">
+  </RDF:Description>
+
+  <!-- overlay information -->
+  <RDF:Seq about="urn:mozilla:overlays">
+    <RDF:li resource="chrome://messenger/content/mailWindowOverlay.xul"/>
+  </RDF:Seq>
+
+  <RDF:Seq about="chrome://messenger/content/mailWindowOverlay.xul">
+    <RDF:li>chrome://keyboardmanager/content/keyboardmanagerOverlay.xul</RDF:li>
+  </RDF:Seq>
+
+</RDF:RDF>

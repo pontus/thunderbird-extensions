@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+
+<r:RDF xmlns:r="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+       xmlns="http://www.mozilla.org/2004/em-rdf#">
+
+  <r:Description about="urn:mozilla:install-manifest">
+    <id>{655d9ec2-7839-47c3-915b-8fa9b7ce7901}</id>
+
+    <name>Headers Toggle</name>
+    <version>0.5.2</version>
+    <description>Adds toggling headers from keyboard functionality.</description>
+
+    <creator>Pontus Freyhult</creator>
+    <homepageURL>http://soua.net/extensions/</homepageURL>
+    <iconURL>chrome://messenger-headers-toggle/content/headers-toggle.png</iconURL>
+
+    <targetApplication>
+      <r:Description>
+        <id>{3550f703-e582-4d05-9a08-453d09bdfdc6}</id>
+        <minVersion>0.8</minVersion>
+        <maxVersion>1.5.0.*</maxVersion>
+      </r:Description>
+    </targetApplication>
+
+    <optionsURL>chrome://messenger-headers-toggle/content/pref-headers-toggle.xul</optionsURL>
+   <!-- <aboutURL>chrome://messenger-headers-toggle/content/about-headers-toggle.xul</aboutURL> -->
+    <file>
+      <r:Description about="urn:mozilla:extension:file:headerst.jar">
+        <package>content/</package>
+	 <locale>locale/en-US/</locale>
+         <locale>locale/sv-SE/</locale>^M
+      </r:Description>
+    </file>
+  </r:Description>
+</r:RDF>

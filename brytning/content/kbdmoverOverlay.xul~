@@ -1,0 +1,40 @@
+<?xml version="1.0"?> 
+
+
+<!DOCTYPE overlay [
+  <!ENTITY % messengerDTD SYSTEM "chrome://messenger/locale/messenger.dtd" >
+%messengerDTD;
+  <!ENTITY % contentAreaCommandsDTD SYSTEM "chrome://communicator/locale/contentAreaCommands.dtd" >
+%contentAreaCommandsDTD;
+  <!ENTITY % brandDTD SYSTEM "chrome://global/locale/brand.dtd" >
+%brandDTD;
+  <!ENTITY % kbdmoverDTD SYSTEM "chrome://kbdmover/locale/kbdmover.dtd" >
+%kbdmoverDTD;
+]>
+
+
+<overlay xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
+
+   <script type="application/x-javascript" src="chrome://kbdmover/content/kbdmover.js"/>
+   <script type="application/x-javascript" src="chrome://kbdmover/content/kbdmoverMainWindowHandling.js"/>
+
+  <keyset id="mailKeys">
+        <key id="key_movemail"
+           key="&kbdmoverCmd.key;"
+           oncommand="kbdmoverMoveMail();"
+           modifiers="accel" />
+   </keyset>
+
+
+   <!-- How do we put this in the Headers menu? Can't seem to add to that anonymous popup -->
+  <menu id="threadPaneContext-moveMenu">
+   <menupopup id="kbdmoverMenuPopup">
+      <menuitem id="kbdmoverMenuItem" 
+                label="&kbdmoverMenu.label;" 
+                accesskey="&kbdmoverCmd.accesskey;"
+                oncommand="kbdmoverMoveMail();"
+	        />
+   </menupopup>
+  </menu>
+
+</overlay>

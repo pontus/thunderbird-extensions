@@ -1,0 +1,259 @@
+<?xml version="1.0"?> 
+
+
+<?xml-stylesheet href="chrome://communicator/skin/" type="text/css"?>
+<?xml-stylesheet href="chrome://messenger/skin/prefPanels.css" type="text/css"?>
+
+<!DOCTYPE dialog SYSTEM "chrome://kbdmover/locale/pref-kbdmover.dtd">
+
+
+<dialog xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
+        xmlns:html="http://www.w3.org/1999/xhtml"
+        xmlns:nc="http://home.netscape.com/NC-rdf#"
+        onload="init();"
+        buttons="accept, cancel"
+        ondialogaccept="return savePrefs();"
+	minheight="760"
+        persist="screenX screenY"
+        title="&pane.title;"
+	id="pref-kbdmover">
+
+  <stringbundleset id="stringbundleset">
+    <stringbundle id="prefbundle" 
+      src="chrome://kbdmover/locale/pref-kbdmover.properties" />
+  </stringbundleset>
+
+  <script type="application/x-javascript">
+
+  <![CDATA[
+    var _elementIDs = ["suggest"];
+    
+    function init()
+    {
+      var pref = Components.classes["@mozilla.org/preferences-service;1"].getService(Components.interfaces.nsIPrefBranch);
+
+      // initialize the default window values...
+      for( var i = 0; i < _elementIDs.length; i++ )
+      {        
+        var elementID = _elementIDs[i];
+        var element = document.getElementById(elementID);
+        if (!element) break;
+        var eltType = element.localName;
+        if (eltType == "radiogroup")
+          element.selectedItem = element.childNodes[pref.getIntPref(element.getAttribute("prefstring"))];
+        else if (eltType == "checkbox")
+          element.checked = pref.getBoolPref(element.getAttribute("prefstring"));
+        else if (eltType == "textbox" && element.getAttribute("preftype") == "int")
+           element.setAttribute("value", pref.getIntPref(element.getAttribute("prefstring")) );
+	else if (eltType == "textbox" && element.getAttribute("preftype") == "char")
+           element.setAttribute("value", pref.getCharPref(element.getAttribute("prefstring")) );
+
+      }
+
+      var e = document.getElementById('ignorelistbox');
+      var bundle = document.getElementById('prefbundle');
+      var suggestArr = pref.getCharPref("kbdmover.suggest").split(/[ ,]/);
+
+      for ( i = 0; i < suggestArr.length+10; i++)
+	//try 
+	{
+	  var nd = document.createElement('richlistitem');
+	  var box = document.createElement('box');
+
+	  if (!box)
+	    alert ("Failed to create listcol");
+	  nd.appendChild(box);
+
+	  var nd2 = document.createElement('textbox');
+	  var nd3 = document.createElement('menupopup');
+	  
+	  var mi =  document.createElement('menuitem');
+	  mi.setAttribute('label','fgdofg');
+
+	  nd3.appendChild( mi);
+
+	  mi =  document.createElement('menuitem');
+	  mi.setAttribute('label','fsddfs');
+
+	  nd3.appendChild( mi);
+	  nd2.value = 'foo'; //bundle.getString(suggestArr[i]);
+
+	  //nd.label = 'test';
+	  
+	  //nd.label = 'test';
+	  nd2.setAttribute('value','test');
+	  nd3.setAttribute('label','gazonk');
+
+	  box.appendChild(nd2);
+	  box.appendChild(nd3);
+	  e.appendChild(nd);
+
+	  
+
+	    // bundle.getString(suggestArr[i]), suggestArr[i]);
+	}
+      //catch (except)
+      //{
+      //  e.appendItem("Fel!","fel");
+	  // e.appendItem(suggestArr[i], suggestArr[i]);
+      //}
+    }
+
+    function enableField(aCheckbox, aNodeID) 
+    { 
+       var aField = document.getElementById(aNodeID); 
+       if (aCheckbox.checked) 
+         aField.removeAttribute("disabled"); 
+       else 
+         aField.setAttribute("disabled", "true"); 
+    } 
+
+
+    function addSuggest()
+  {
+    var e = document.getElementById('ignorelistbox');
+
+    var nd = document.createElement('richlistitem');
+    var box = document.createElement('box');
+    nd.appendChild(box);
+    
+    var nd2 = document.createElement('textbox');
+    var nd3 = document.createElement('menupopup');
+    
+
+
+    nd2.value = 'foo'; //bundle.getString(suggestArr[i]);
+    nd3.value = 'bar';
+
+    
+    nd.label = 'test';
+    nd.setAttribute('label','gdgf');
+    nd3.setAttribute('label','fdsdfgdgf');
+    nd3.setAttribute('oncommand','addSuggest();');
+
+    
+    box.appendChild(nd2);
+    box.appendChild(nd3);
+    e.appendChild(nd);
+  }
+
+    function deleteSuggest()
+  {
+    var list = document.getElementById('ignorelistbox');
+    var count = list.selectedCount;
+    while (count--){
+      var item = list.selectedItems[0];
+      list.removeItemAt(list.getIndexOfItem(item));
+    }
+  }
+
+    
+    function savePrefs()
+    {
+      var pref = Components.classes["@mozilla.org/preferences-service;1"].getService(Components.interfaces.nsIPrefBranch);
+
+      for( var i = 0; i < _elementIDs.length; i++ )
+      {
+        var elementID = _elementIDs[i];
+
+        var element = document.getElementById(elementID);
+        if (!element) break;
+        var eltType = element.localName;
+
+        if (eltType == "radiogroup")
+          pref.setIntPref(element.getAttribute("prefstring"), parseInt(element.value));
+        else if (eltType == "checkbox")
+          pref.setBoolPref(element.getAttribute("prefstring"), element.checked);
+        else if (eltType == "textbox" && element.getAttribute("preftype") == "char")
+          pref.setCharPref(element.getAttribute("prefstring"), element.value);
+        else if (eltType == "textbox" && element.getAttribute("preftype") == "int")
+          pref.setIntPref(element.getAttribute("prefstring"), parseInt(element.value) );
+
+       }
+    }
+  ]]>
+  </script>
+
+<groupbox>
+  <caption label="&rHeader;"/>
+
+  <separator class="thin"/>
+
+
+<!-- 
+  <textbox id="suggest" preftype="char"
+                prefstring="kbdmover.suggest" label="&textSuggest;"/>
+  <description>&textSuggestHelp; </description>
+
+-->
+
+
+<richlistbox id="ignorelistbox" >
+<richlistitem>
+<menupopup label="fgf">
+<menuitem label="gfgf" />
+</menupopup>
+</richlistitem>
+</richelistbox>
+<hbox>
+<button label="&addSuggest;" oncommand="addSuggest();"/>
+<button label="&deleteSuggest;" oncommand="deleteSuggest();"/>
+</hbox>
+
+
+
+
+
+<hbox>
+<button label="ts" oncommand="alert(document.getElementById('ignoreFolder').value)" />
+
+  <menulist label="test" id="ignoreFolder" 
+    sortResource="http://home.netscape.com/NC-rdf#FolderTreeName"
+    sortDirection="ascending"
+    datasources="rdf:msgaccountmanager rdf:mailnewsfolders"
+    ref="msgaccounts:/">
+        <template>
+          <rule iscontainer="true" isempty="false">
+            <menupopup class="menulist-menupopup">
+              <menu uri="..." class="folderMenuItem menu-iconic" label="rdf:http://home.netscape.com/NC-rdf#Name" 
+                                oncommand="alert(event.target.getAttribute('id'))"
+        SpecialFolder="rdf:http://home.netscape.com/NC-rdf#SpecialFolder"
+                                BiffState="rdf:http://home.netscape.com/NC-rdf#BiffState"
+                                IsServer="rdf:http://home.netscape.com/NC-rdf#IsServer"
+                                IsSecure="rdf:http://home.netscape.com/NC-rdf#IsSecure"
+                                ServerType="rdf:http://home.netscape.com/NC-rdf#ServerType">
+                <menupopup>
+                  <menuitem label="Mappen"
+                                oncommand="alert('test2'); alert(event.target.getAttribute('id'))"/>
+                  <menuseparator/>
+                </menupopup>
+              </menu>
+            </menupopup>
+          </rule>
+
+
+          <rule iscontainer="true" isempty="true">
+            <menupopup>
+             <menuitem uri="..." class="folderMenuItem menuitem-iconic" 
+				oncommand="alert('test3')"
+				label="rdf:http://home.netscape.com/NC-rdf#Name"
+                                SpecialFolder="rdf:http://home.netscape.com/NC-rdf#SpecialFolder"
+                                BiffState="rdf:http://home.netscape.com/NC-rdf#BiffState"
+                                IsServer="rdf:http://home.netscape.com/NC-rdf#IsServer"
+                                IsSecure="rdf:http://home.netscape.com/NC-rdf#IsSecure"
+                                ServerType="rdf:http://home.netscape.com/NC-rdf#ServerType"/>
+            </menupopup>
+
+          </rule>
+
+    </template>
+  </menulist>
+
+  <spacer flex="1"/>
+  <spacer width="300" />
+</hbox>
+
+
+
+</groupbox>
+</dialog>
