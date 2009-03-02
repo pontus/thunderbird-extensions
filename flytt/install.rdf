@@ -7,7 +7,7 @@
     <id>{191E67F6-A6CF-11D9-8BDE-F66BAD1E3F3A}</id>
 
     <name>KbdMover</name>
-    <version>0.9</version>
+    <version>0.91</version>
     <description>Adds move mail from keyboard functionality.</description>
 
     <creator>Pontus Freyhult</creator>
@@ -17,13 +17,13 @@
     <targetApplication>
       <r:Description>
         <id>{3550f703-e582-4d05-9a08-453d09bdfdc6}</id>
-        <minVersion>1.0</minVersion>
-        <maxVersion>2.0.0.*</maxVersion>
+        <minVersion>3.0a1</minVersion>
+        <maxVersion>3.0.0.*</maxVersion>
       </r:Description>
     </targetApplication>
 
     <optionsURL>chrome://kbdmover/content/pref-kbdmover.xul</optionsURL>
-    <!-- <aboutURL>chrome://kbdmover/content/about-kbdmover.xul</aboutURL> -->
+
 
     <file>
       <r:Description about="urn:mozilla:extension:file:kbdmover.jar">

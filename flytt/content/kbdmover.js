@@ -84,25 +84,27 @@ var kbdmover = {
   
     if( folder.hasSubFolders )
     { 
-      var en = folder.GetSubFolders();
+      var en = folder.subFolders;
       
       try
 	{
-	  while ( ! en.isDone() )
-	    { 
-	      var next = en.currentItem();
-	      if (next)
-		{
-		  var nf = next.QueryInterface(Components.interfaces.nsIMsgFolder);
-		  
-		  this.mapFolder(nf, path+"/"+folder.name);	
+	    while ( en.hasMoreElements() )
+		{ 
+		    var next = en.getNext();
+		    if (next)
+			{
+			    var nf = next.QueryInterface(Components.interfaces.nsIMsgFolder);
+			    
+			    this.mapFolder(nf, path+"/"+folder.name);	
+			}
+
 		}
-	      en.next();
-	    }
-	  
+	    
 	} 
       catch (except) 
 	{	
+	    this.myDump("Something happened while listing folders: "+
+			except);
 	}
     }
   
@@ -277,7 +279,7 @@ function kbdmoverMoveCallback(ret)
   var a = new kbdretWrapper(ret);
   kbdmover.myDump( "Moving to "+ret.uri );
   
-  MsgMoveMessage( a );
+  MsgMoveMessage( ret.folder );
 }
 
 function kbdmoverCopyCallback(ret)
@@ -285,14 +287,14 @@ function kbdmoverCopyCallback(ret)
 
   var a = new kbdretWrapper(ret);
   kbdmover.myDump( "Copying to "+ret.uri ); 
-  MsgCopyMessage( a );
+  MsgCopyMessage( ret.folder );
 }
 
 function kbdmoverGotoCallback(ret)
 {
   var a = new kbdretWrapper(ret);
   kbdmover.myDump( "Going to "+ret.uri );
-  SelectFolder(ret.uri);  
+  SelectFolder( ret.folder );  
 }
 
 

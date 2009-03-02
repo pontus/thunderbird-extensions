@@ -138,15 +138,15 @@ function init()
 
   // Fill in suggested value, branches may return, so this should be the last part of init.
 
-  var abook = Components.classes["@mozilla.org/addressbook;1"].
-                  getService(Components.interfaces.nsIAddressBook);
+  var abook = Components.classes["@mozilla.org/abmanager;1"].
+                  getService(Components.interfaces.nsIAbManager);
 
-  var database = abook.getAbDatabaseFromURI("moz-abmdbdirectory://abook.mab");
+  var dirs = abook.directories.getService(Components.Interfaces.nsISimpleEnumerator);
 
-  var dir = Components.classes[ "@mozilla.org/rdf/rdf-service;1"].
-                  getService(Components.interfaces.nsIRDFService).
-                  GetResource("moz-abmdbdirectory://abook.mab").
-                  QueryInterface(Components.interfaces.nsIAbDirectory);
+  var database = 0;
+
+  if (dirs.hasMoreElements())
+      database = dirs.getNext().getService(Components.Interfaces.nsIAbDirectory);
  
   var hdr;
 
