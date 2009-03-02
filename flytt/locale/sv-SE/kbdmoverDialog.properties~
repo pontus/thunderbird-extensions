@@ -1,7 +1,0 @@
-MoveMessagesTo=Flytta %1$S meddelanden till: 
-MoveMessageTo=Flytta meddelandet till: 
-MovingTo=Flyttar till: %1$S 
-AmbigComp=Inte tillräckligt med tecken angivna för en entydig komplettering, ge mer av namnet.
-AmbigName=%1$S är komplett men specifierar inte entydigt en brevlåda, ange fler delar.
-AmbigNameNext=%1$S är komplett men också en del av ett längre namn, acceptera bara för att välja föreslagen mapp.
-
