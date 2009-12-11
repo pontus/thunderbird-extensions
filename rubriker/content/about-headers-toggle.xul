@@ -3,7 +3,7 @@
 
 <?xml-stylesheet href="chrome://communicator/skin/" type="text/css"?>
 
-<!DOCTYPE dialog SYSTEM "chrome://messenger-headers-toggle/locale/about-headers-toggle.dtd">
+<!DOCTYPE dialog SYSTEM "chrome://headerstoggle/locale/about-headers-toggle.dtd">
 
 <dialog xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
         onload="init();"

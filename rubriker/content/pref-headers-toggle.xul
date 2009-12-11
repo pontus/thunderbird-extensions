@@ -4,7 +4,7 @@
 <?xml-stylesheet href="chrome://communicator/skin/" type="text/css"?>
 <?xml-stylesheet href="chrome://messenger/skin/prefPanels.css" type="text/css"?>
 
-<!DOCTYPE dialog SYSTEM "chrome://messenger-headers-toggle/locale/pref-headers-toggle.dtd">
+<!DOCTYPE dialog SYSTEM "chrome://headerstoggle/locale/pref-headers-toggle.dtd">
 
 <dialog xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
         onload="init();"
