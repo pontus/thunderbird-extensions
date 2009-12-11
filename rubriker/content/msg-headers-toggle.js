@@ -34,7 +34,7 @@ function MsgViewToggleHeaders()
     gPrefBranch.setIntPref("extensions.enigmail.show_headers",newheaders);
 
     if (gDBView)
-	MsgReload();
-
+	gDBView.reloadMessage();
+	
     return true;
 }
