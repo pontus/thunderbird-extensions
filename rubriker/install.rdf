@@ -12,7 +12,7 @@
 
     <creator>Pontus Freyhult</creator>
     <homepageURL>http://soua.net/extensions/</homepageURL>
-    <iconURL>chrome://messenger-headers-toggle/content/headers-toggle.png</iconURL>
+    <iconURL>chrome://headerstoggle/content/headers-toggle.png</iconURL>
 
     <targetApplication>
       <r:Description>
@@ -22,14 +22,6 @@
       </r:Description>
     </targetApplication>
 
-    <optionsURL>chrome://messenger-headers-toggle/content/pref-headers-toggle.xul</optionsURL>
-   <!-- <aboutURL>chrome://messenger-headers-toggle/content/about-headers-toggle.xul</aboutURL> -->
-    <file>
-      <r:Description about="urn:mozilla:extension:file:headerst.jar">
-        <package>content/</package>
-	 <locale>locale/en-US/</locale>
-         <locale>locale/sv-SE/</locale>^M
-      </r:Description>
-    </file>
-  </r:Description>
+    <optionsURL>chrome://headerstoggle/content/pref-headers-toggle.xul</optionsURL>
+
 </r:RDF>
