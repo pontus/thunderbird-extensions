@@ -1,0 +1,6 @@
+content messenger-headers-toggle chrome/
+overlay chrome://messenger/content/mailWindowOverlay.xul chrome://messenger-headers-toggle/content/msgHeaders-toggleOverlay.xul
+locale messenger-headers-toggle en-US chrome/locale/en-US/
+locale messenger-headers-toggle en chrome/locale/en-US/
+locale messenger-headers-toggle sv-SE chrome/locale/sv-SE/
+locale messenger-headers-toggle sv chrome/locale/sv-SE/
