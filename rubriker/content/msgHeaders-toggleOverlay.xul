@@ -8,7 +8,7 @@
 %contentAreaCommandsDTD;
   <!ENTITY % brandDTD SYSTEM "chrome://global/locale/brand.dtd" >
 %brandDTD;
-  <!ENTITY % headerstoggleDTD SYSTEM "chrome://headerstoggle/locale/headers-toggle.dtd" >
+  <!ENTITY % headerstoggleDTD SYSTEM "chrome://messenger-headers-toggle/locale/headers-toggle.dtd" >
 %headerstoggleDTD;
 ]>
 
@@ -16,7 +16,7 @@
 <overlay xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
 
    <script language="JavaScript" src="chrome://messenger/content/msgHdrViewOverlay.js"/>
-   <script language="JavaScript" src="chrome://headerstoggle/content/msg-headers-toggle.js"/>
+   <script language="JavaScript" src="chrome://messenger-headers-toggle/content/msg-headers-toggle.js"/>
 
    <keyset id="mailKeys">
         <key id="key_toggleheaders" 

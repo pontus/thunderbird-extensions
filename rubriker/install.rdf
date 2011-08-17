@@ -7,21 +7,25 @@
     <id>{655d9ec2-7839-47c3-915b-8fa9b7ce7901}</id>
 
     <name>Headers Toggle</name>
-    <version>0.6</version>
+    <version>0.7</version>
     <description>Adds toggling headers from keyboard functionality.</description>
+    <type>2</type>
+
+    
+    <optionsType>2</optionsType>
 
     <creator>Pontus Freyhult</creator>
     <homepageURL>http://soua.net/extensions/</homepageURL>
-    <iconURL>chrome://headerstoggle/content/headers-toggle.png</iconURL>
+    <iconURL>chrome://messenger-headers-toggle/content/headers-toggle.png</iconURL>
 
     <targetApplication>
       <r:Description>
         <id>{3550f703-e582-4d05-9a08-453d09bdfdc6}</id>
         <minVersion>3.0</minVersion>
-        <maxVersion>3.0.*</maxVersion>
+        <maxVersion>3.*.*</maxVersion>
       </r:Description>
     </targetApplication>
 
-    <optionsURL>chrome://headerstoggle/content/pref-headers-toggle.xul</optionsURL>
+    <optionsURL>chrome://messenger-headers-toggle/content/pref-headers-toggle.xul</optionsURL>
 
 </r:RDF>

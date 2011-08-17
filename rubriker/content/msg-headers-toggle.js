@@ -12,29 +12,29 @@ function MsgViewToggleHeaders()
     {
     case 0:
 
-	newheaders=1;
-	var header = document.getElementById("messagePane").contentDocument.getElementById("headingwrapper");
+      var pane = document.getElementById("msgHeaderView");
+      if (pane)
+	pane.hidden = false;
 
-	if (header)
-	    header.style.display = "";
-	break;
+      newheaders=1;
+      break;
 
     case 1:
-	newheaders=2;
-	break;
+      newheaders=2;
+      break;
 
     case 2:
 	if (includeno)
  	{
 	    newheaders=0;
 
-	    hideHeaderView(gExpandedHeaderView);
-	    var header = document.getElementById("messagePane").contentDocument.getElementById("headingwrapper");
-	    if (header)
-		header.style.display = "none";
+	    var pane = document.getElementById("msgHeaderView");
+	    if (pane)
+	      pane.hidden = true;
+
 	}
 	else
-	    newheaders=1;
+	  newheaders=1;
 
 	break;
     }
